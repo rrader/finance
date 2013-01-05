@@ -1,4 +1,5 @@
 <div ng-controller="AccountsController">
+    {{ status }}
     <table class="table table-hover table-striped table-bordered">
       <caption>Счета</caption>
       <thead>
@@ -12,15 +13,16 @@
       <tbody>
           <tr ng-repeat="acc in accounts">
             <td> {{ acc.name }} </td>
-            <td> {{ acc.value }} </td>
-            <td> {{ acc.currency }} </td>
+            <td> {{ acc.balance }} </td>
+            <td> {{ acc.currency.name }} </td>
             <td width="25%"> <a ng-click="actualize = !actualize">Актуализировать</a>
                 <div ng-show="actualize">
                     <form class="form-inline">
                         <input type="text" class="input-medium" placeholder="Актуальный баланс" />
                         <button onclick="alert('not implemented')">OK</button>
                     </form>
-                </div><a onclick="alert('not implemented')">Деактивировать</a> </td>
+                </div><br><a onclick="alert('not implemented')">Деактивировать</a><br>
+                <a ng-click="del_account(acc.id)">Удалить</a> </td>
           </tr>
       </tbody>
     </table>
@@ -29,11 +31,11 @@
     <div class="well span6" ng-show="add_block">
         <label>Добавление счета</label>
         <form>
-            <input type="text" class="input-large" placeholder="Название" />
-            <input type="text" class="input-medium" placeholder="Начальный баланс" />
-            <select ng-model="currency" class="input-small" ng-options="item for item in currency_list" />
+            <input type="text" ng-model="account_name" class="input-large" placeholder="Название" />
+            <input type="text" ng-model="start_balance" class="input-medium" placeholder="Начальный баланс" />
+            <select ng-model="currency" class="input-small" ng-options="item.id as item.name for item in currency_list" />
             <br />
-            <button onclick="alert('not implemented')">Добавить</button>
+            <button ng-click="add_account()">Добавить</button>
         </form>
     </div>
 </div>
