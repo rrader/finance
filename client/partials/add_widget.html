@@ -27,7 +27,7 @@
         <div id="income" class="tab-pane fade">
             <form class="well">
                 <label>Счет</label>
-                <select ng-model="account_out" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
+                <select ng-model="account_in" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
                 <label>Сумма</label>
                 <input type="text" ng-model="value" class="input-medium" placeholder="Сумма" />
                 <label>Дата</label>
@@ -51,9 +51,8 @@
 
                 <label>Счет 2</label>
                 <select ng-model="account_in" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
-                <label>Сумма 2</label>
-                <input ng-show="account_in.currency.id != account_out.currency.id" type="text" ng-model="value2" class="input-medium" placeholder="Сумма 2" />
-
+                <label ng-show="accounts[account_in].currency.id != accounts[account_out].currency.id">Сумма 2</label>
+                <input ng-show="accounts[account_in].currency.id != accounts[account_out].currency.id" type="text" ng-model="value2" class="input-medium" placeholder="Сумма 2" />
 
                 <label>Комментарий</label>
                 <textarea rows="3" ng-model="comment"></textarea>
