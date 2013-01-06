@@ -51,8 +51,8 @@
 
                 <label>Счет 2</label>
                 <select ng-model="account_in" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
-                <label ng-show="accounts[account_in].currency.id != accounts[account_out].currency.id">Сумма 2</label>
-                <input ng-show="accounts[account_in].currency.id != accounts[account_out].currency.id" type="text" ng-model="value2" class="input-medium" placeholder="Сумма 2" />
+                <label ng-show="accounts[account_in-1].currency.id != accounts[account_out-1].currency.id">Сумма 2</label>
+                <input ng-show="accounts[account_in-1].currency.id != accounts[account_out-1].currency.id" type="text" ng-model="value2" class="input-medium" placeholder="Сумма 2" />
 
                 <label>Комментарий</label>
                 <textarea rows="3" ng-model="comment"></textarea>
