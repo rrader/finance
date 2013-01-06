@@ -1,0 +1,17 @@
+<div ng-controller="CategoriesController">
+    <h3>Категории</h3>
+    <ul>
+      <li ng-repeat="acc in categories_list">{{acc.ctype}}: {{acc.name}}   [<a ng-click="del(acc.id)">удалить</a>]</li>
+    </ul>
+
+    <a ng-click="add_block = !add_block">Добавить категорию</a><br /><br />
+    <div class="well span6" ng-show="add_block">
+        <label>Добавление категории</label>
+        <form>
+            <input type="text" ng-model="category_name" class="input-large" placeholder="Название" />
+            <select ng-model="category_type" class="input-small" ng-options="item.value as item.name for item in category_types" />
+            <br />
+            <button ng-click="add()">Добавить</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+Добавить транзакцию:
+
+<div ng-controller="AddTransactionWidgetController">
+    <ul class="nav nav-pills">
+        <li class="active"><a showtab="" href="#outcome" ng-click="current_type='outcome'; reset_category()">Расход</a></li>
+        <li><a showtab="" href="#transfer" ng-click="current_type='transfer'; reset_category()">Перевод</a></li>
+        <li><a showtab="" href="#income" ng-click="current_type='income'; reset_category()">Доход</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="outcome">
+            <form class="well">
+                <label>Счет</label>
+                <select ng-model="account_out" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
+                <label>Сумма</label>
+                <input type="text" ng-model="value" class="input-medium" placeholder="Сумма" />
+                <label>Дата</label>
+                <input type="text" size="35" ng-model="dateItem" date-picker date='dd MMMM yyyy'>
+                <label><a href="#/settings">Категория</a></label>
+                <select ng-model="category_outcome" class="input-large" ng-options="item.id as item.name for item in get_categories(current_type)" />
+                <label>Комментарий</label>
+                <textarea rows="3" ng-model="comment"></textarea>
+                <button ng-click="test()">Добавить</button>
+            </form>
+        </div>
+
+        <div id="income" class="tab-pane fade">
+            <form class="well">
+                <label>Счет</label>
+                <select ng-model="account_out" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
+                <label>Сумма</label>
+                <input type="text" ng-model="value" class="input-medium" placeholder="Сумма" />
+                <label>Дата</label>
+                <input type="text" size="35" ng-model="dateItem" date-picker date='dd MMMM yyyy'>
+                <label><a href="#/settings">Категория</a></label>
+                <select ng-model="category_income" class="input-large" ng-options="item.id as item.name for item in get_categories(current_type)" />
+                <label>Комментарий</label>
+                <textarea rows="3" ng-model="comment"></textarea>
+                <button ng-click="test()">Добавить</button>
+            </form>
+        </div>
+        
+        <div id="transfer" class="tab-pane fade">
+            <form class="well">
+                <label>Счет</label>
+                <select ng-model="account_out" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
+                <label>Сумма</label>
+                <input type="text" ng-model="value" class="input-medium" placeholder="Сумма" />
+                <label>Дата</label>
+                <input type="text" size="35" ng-model="dateItem" date-picker date='dd MMMM yyyy'>
+
+                <label>Счет 2</label>
+                <select ng-model="account_in" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
+                <label>Сумма 2</label>
+                <input ng-show="account_in.currency.id != account_out.currency.id" type="text" ng-model="value2" class="input-medium" placeholder="Сумма 2" />
+
+
+                <label>Комментарий</label>
+                <textarea rows="3" ng-model="comment"></textarea>
+                <button ng-click="test()">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>

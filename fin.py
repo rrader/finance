@@ -1,4 +1,4 @@
-from flask import Flask, url_for, json, Response, request
+from flask import Flask, json, Response, request
 import db
 
 app = Flask(__name__, static_folder="client")
@@ -33,6 +33,30 @@ def api_accounts():
         acc.delete_instance()
 
         return Response(json.dumps({'request':'ok'}), status=200, mimetype='application/json')
+
+@app.route('/api/categories', methods=["POST", "GET", "DELETE"])
+def api_categories():
+    if request.method == 'GET':
+        def prepare(acc):
+            return acc
+
+        js = json.dumps([ prepare(cat._data) for cat in db.Category.select()])
+        return Response(js, status=200, mimetype='application/json')
+
+    if request.method == 'POST':
+        name = request.args['name']
+        ctype = request.args['type']
+        new_c = db.Category(name=name, ctype=ctype)
+        new_c.save()
+
+        return Response(json.dumps({'request':'ok'}), status=200, mimetype='application/json')
+
+    if request.method == 'DELETE':
+        acc = db.Category.get(id=int(request.args['id']))
+        acc.delete_instance()
+
+        return Response(json.dumps({'request':'ok'}), status=200, mimetype='application/json')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
