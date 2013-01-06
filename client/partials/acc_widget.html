@@ -1,0 +1,16 @@
+<div ng-controller="AccountsController">
+    <table class="table table-striped table-bordered">
+      <caption>Счета</caption>
+      <thead>
+          <tr>
+            <th> Название </th>
+            <th> Баланс </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="acc in accounts">
+            <td> {{ acc.name }} </td>
+            <td> {{ acc.balance }} {{ acc.currency.name }} </td>
+      </tbody>
+    </table>
+</div>

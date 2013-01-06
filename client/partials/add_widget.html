@@ -1,6 +1,6 @@
-Добавить транзакцию:
+<div ng-controller="AddTransactionWidgetController" class="well">
+    Добавить транзакцию:
 
-<div ng-controller="AddTransactionWidgetController">
     <ul class="nav nav-pills">
         <li class="active"><a showtab="" href="#outcome" ng-click="current_type='outcome'; reset_category()">Расход</a></li>
         <li><a showtab="" href="#transfer" ng-click="current_type='transfer'; reset_category()">Перевод</a></li>
@@ -8,8 +8,8 @@
     </ul>
 
     <div class="tab-content">
-        <div class="tab-pane fade in active" id="outcome">
-            <form class="well">
+        <div class="tab-pane active" id="outcome">
+            <form>
                 <label>Счет</label>
                 <select ng-model="account_out" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
                 <label>Сумма</label>
@@ -24,8 +24,8 @@
             </form>
         </div>
 
-        <div id="income" class="tab-pane fade">
-            <form class="well">
+        <div id="income" class="tab-pane">
+            <form>
                 <label>Счет</label>
                 <select ng-model="account_in" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
                 <label>Сумма</label>
@@ -40,8 +40,8 @@
             </form>
         </div>
         
-        <div id="transfer" class="tab-pane fade">
-            <form class="well">
+        <div id="transfer" class="tab-pane">
+            <form>
                 <label>Счет</label>
                 <select ng-model="account_out" class="input-large" ng-options="item.id as item.name+' ['+item.currency.name+']' for item in accounts" />
                 <label>Сумма</label>
