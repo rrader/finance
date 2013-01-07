@@ -244,7 +244,7 @@ function TransactionsController($scope, $http) {
     reload_transactions_func = $scope.reload_transactions;
 
     $scope.make_time = function(d) {
-        var x = new Date(d);
+        var x = new Date(d*1000);
         return x.toDateString();
     }
 }
