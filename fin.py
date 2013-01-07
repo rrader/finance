@@ -1,5 +1,7 @@
 from flask import Flask, json, Response, request
 import db
+import datetime
+import time
 
 app = Flask(__name__, static_folder="client")
 
@@ -56,6 +58,74 @@ def api_categories():
         acc.delete_instance()
 
         return Response(json.dumps({'request':'ok'}), status=200, mimetype='application/json')
+
+
+
+@app.route('/api/transactions', methods=["POST", "GET", "DELETE"])
+def api_transactions():
+    if request.method == 'GET':
+        def prepare(acc):
+            try:
+                acc['account_to'] = db.Account.get(id=acc['account_to'])._data
+            except db.Account.DoesNotExist:
+                pass
+
+            try:
+                acc['account_from'] = db.Account.get(id=acc['account_from'])._data
+            except db.Account.DoesNotExist:
+                pass
+
+            try:
+                acc['category'] = db.Category.get(id=acc['category'])._data
+            except db.Category.DoesNotExist:
+                pass
+            
+            acc['timestamp'] = int(time.mktime(acc['timestamp'].timetuple()))
+
+            return acc
+
+        js = json.dumps([ prepare(item._data) for item in 
+            db.Transaction.select().order_by(db.Transaction.timestamp.desc())])
+        return Response(js, status=200, mimetype='application/json')
+
+    if request.method == 'POST':
+        if 'account_from' in request.args:
+            acc_from = db.Account.get(id=request.args['account_from'])
+        else:
+            acc_from = None
+
+        if 'account_to' in request.args:
+            acc_to = db.Account.get(id=request.args['account_to'])
+        else:
+            acc_to = None
+        value1 = float(request.args['value1'])
+
+        if 'value2' in request.args:
+            value2 = float(request.args['value2'])
+        else:
+            value2 = None
+        
+        timestamp = int(request.args['timestamp'])
+        comment = request.args['comment']
+        try:
+            category = db.Category.get(id=request.args['category'])
+        except:
+            category = None
+        new_t = db.Transaction(account_from=acc_from, account_to=acc_to,
+                                value=value1, value2=value2,
+                                timestamp=datetime.datetime.fromtimestamp(timestamp),
+                                comment=comment,
+                                category=category)
+        new_t.save()
+
+        return Response(json.dumps({'request':'ok'}), status=200, mimetype='application/json')
+
+    if request.method == 'DELETE':
+        acc = db.Transaction.get(id=int(request.args['id']))
+        acc.delete_instance()
+
+        return Response(json.dumps({'request':'ok'}), status=200, mimetype='application/json')
+
 
 
 if __name__ == '__main__':

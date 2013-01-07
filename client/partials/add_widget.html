@@ -19,8 +19,8 @@
                 <label><a href="#/settings">Категория</a></label>
                 <select ng-model="category_outcome" class="input-large" ng-options="item.id as item.name for item in get_categories(current_type)" />
                 <label>Комментарий</label>
-                <textarea rows="3" ng-model="comment"></textarea>
-                <button ng-click="test()">Добавить</button>
+                <textarea rows="3" name="comment" ng-model="comment"></textarea>
+                <button ng-click="add()">Добавить</button>
             </form>
         </div>
 
@@ -36,7 +36,7 @@
                 <select ng-model="category_income" class="input-large" ng-options="item.id as item.name for item in get_categories(current_type)" />
                 <label>Комментарий</label>
                 <textarea rows="3" ng-model="comment"></textarea>
-                <button ng-click="test()">Добавить</button>
+                <button ng-click="add()">Добавить</button>
             </form>
         </div>
         
@@ -56,7 +56,7 @@
 
                 <label>Комментарий</label>
                 <textarea rows="3" ng-model="comment"></textarea>
-                <button ng-click="test()">Добавить</button>
+                <button ng-click="add()">Добавить</button>
             </form>
         </div>
     </div>

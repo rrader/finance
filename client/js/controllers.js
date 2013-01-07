@@ -144,6 +144,8 @@ function CategoriesController($scope, $http) {
 
 }
 
+var reload_transactions_func;
+
 function AddTransactionWidgetController($scope, $http) {
     $scope.categories_list = [];
     update_accounts.push($scope);
@@ -156,6 +158,7 @@ function AddTransactionWidgetController($scope, $http) {
     }
 
     $scope.current_type = 'outcome';
+    $scope.comment = '';
     
     $scope.isNullCategory = function() {
         return eval("null==$scope.category_"+$scope.current_type);
@@ -182,5 +185,66 @@ function AddTransactionWidgetController($scope, $http) {
 
     var date = new Date();
     $scope.dateItem = date.getTime();
+
+
+    $scope.add = function() {
+        if ($scope.current_type == 'outcome') {
+            var cdata = {account_from: $scope.account_out,
+                         account_to: null,
+                         value1: $scope.value,
+                         value2: null,
+                         timestamp: ~~($scope.dateItem/1000),
+                         comment: $scope.comment,
+                         category: $scope.category_outcome};
+        }
+
+        if ($scope.current_type == 'income') {
+            var cdata = {account_from: null,
+                         account_to: $scope.account_in,
+                         value1: $scope.value,
+                         value2: null,
+                         timestamp: ~~($scope.dateItem/1000),
+                         comment: $scope.comment,
+                         category: $scope.category_income};
+        }
+
+        if ($scope.current_type == 'transfer') {
+            var cdata = {account_from: $scope.account_out,
+                         account_to: $scope.account_in,
+                         value1: $scope.value,
+                         value2: $scope.value2,
+                         timestamp: ~~($scope.dateItem/1000),
+                         comment: $scope.comment,
+                         category: null};
+        }        
+
+        $http({method: 'POST', url: '/api/transactions', params: cdata}).
+          success(function(data, status) {
+            $scope.reload_categories();
+            $scope.category_name = '';
+            if (reload_transactions_func) {
+                reload_transactions_func();
+            }
+          }).
+          error(function(data, status) {
+        });
+    };
 }
 
+function TransactionsController($scope, $http) {
+    $scope.reload_transactions = function() {
+        $http({method: 'GET', url: '/api/transactions'}).
+          success(function(data, status) {
+              $scope.transactions = data;
+          }).
+          error(function(data, status) {
+        });
+      }
+    $scope.reload_transactions();
+    reload_transactions_func = $scope.reload_transactions;
+
+    $scope.make_time = function(d) {
+        var x = new Date(d);
+        return x.toDateString();
+    }
+}

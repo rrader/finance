@@ -5,7 +5,7 @@
 angular.module('fin', ['fin.filters', 'fin.services', 'fin.directives']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/accounts', {templateUrl: 'partials/accounts.html', controller: AccountsController});
-    $routeProvider.when('/settings', {templateUrl: 'partials/settings.html', controller: AccountsController});
-    // $routeProvider.when('/info', {templateUrl: 'partials/info.html', controller: MyCtrl2});
+    $routeProvider.when('/settings', {templateUrl: 'partials/settings.html', controller: CategoriesController});
+    $routeProvider.when('/transactions', {templateUrl: 'partials/transactions.html', controller: TransactionsController});
     $routeProvider.otherwise({redirectTo: '/accounts'});
   }]);

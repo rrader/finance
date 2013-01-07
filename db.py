@@ -27,10 +27,12 @@ class Category(Model):
 
 class Transaction(Model):
     value = DoubleField()
+    value2 = DoubleField(null=True)
     account_from = ForeignKeyField(Currency, related_name='transactions', null=True)
     account_to = ForeignKeyField(Currency, related_name='transactions', null=True)
     timestamp = DateTimeField()
-    account_to = ForeignKeyField(Category, related_name='transactions')
+    category = ForeignKeyField(Category, related_name='transactions', null=True)
+    comment = CharField()
 
     class Meta:
         database = db

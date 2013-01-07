@@ -1,0 +1,25 @@
+<div>
+    <table class="table table-hover table-striped table-bordered">
+      <caption>Транзакции</caption>
+      <thead>
+          <tr>
+            <th> Сумма </th>
+            <th> Счет </th>
+            <th> Категория </th>
+            <th> Комментарий </th>
+            <th> Дата </th>
+            <th> Действия </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="item in transactions">
+            <td> <b><span style="color:red;" ng-show="item.account_from && !item.account_to">-{{ item.value }}</span><span style="color:green;" ng-show="!item.account_from && item.account_to">-{{ item.value }}</span><span style="color:blue;" ng-show="item.account_from && item.account_to">{{ item.value }}</span></b> </td>
+            <td> {{ item.account_from.name }} => {{ item.account_to.name }} </td>
+            <td> {{ item.category.name }} </td>
+            <td> {{ item.comment }} </td>
+            <td> {{ make_time(item.timestamp) }} </td>
+            <td><a href="">Удалить</a></td>
+          </tr>
+      </tbody>
+    </table>
+</div>
